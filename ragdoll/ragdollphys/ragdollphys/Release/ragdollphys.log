@@ -1,0 +1,49 @@
+﻿  EntryPoint.cpp
+C:\projects\ragdoll\ragdollphys\ragdollphys\QuadTree.h(57,28): warning C4018: '<': signed/unsigned mismatch
+  (compiling source file 'EntryPoint.cpp')
+  
+C:\projects\ragdoll\ragdollphys\ragdollphys\QuadTree.h(95,27): warning C4018: '<': signed/unsigned mismatch
+  (compiling source file 'EntryPoint.cpp')
+  
+C:\projects\ragdoll\ragdollphys\ragdollphys\QuadTree.h(165,27): warning C4018: '<': signed/unsigned mismatch
+  (compiling source file 'EntryPoint.cpp')
+  
+C:\projects\ragdoll\ragdollphys\ragdollphys\RenderQuadTree.h(36,21): warning C4018: '<': signed/unsigned mismatch
+  (compiling source file 'EntryPoint.cpp')
+  
+  QuadTree.h
+C:\projects\ragdoll\ragdollphys\ragdollphys\QuadTree.h(57,28): warning C4018: '<': signed/unsigned mismatch
+C:\projects\ragdoll\ragdollphys\ragdollphys\QuadTree.h(95,27): warning C4018: '<': signed/unsigned mismatch
+C:\projects\ragdoll\ragdollphys\ragdollphys\QuadTree.h(165,27): warning C4018: '<': signed/unsigned mismatch
+  RenderWindow.cpp
+C:\projects\ragdoll\ragdollphys\ragdollphys\QuadTree.h(57,28): warning C4018: '<': signed/unsigned mismatch
+  (compiling source file 'RenderWindow.cpp')
+  
+C:\projects\ragdoll\ragdollphys\ragdollphys\QuadTree.h(95,27): warning C4018: '<': signed/unsigned mismatch
+  (compiling source file 'RenderWindow.cpp')
+  
+C:\projects\ragdoll\ragdollphys\ragdollphys\QuadTree.h(165,27): warning C4018: '<': signed/unsigned mismatch
+  (compiling source file 'RenderWindow.cpp')
+  
+C:\projects\ragdoll\ragdollphys\ragdollphys\RenderQuadTree.h(36,21): warning C4018: '<': signed/unsigned mismatch
+  (compiling source file 'RenderWindow.cpp')
+  
+  Vector2f.cpp
+EntryPoint.obj : error LNK2001: unresolved external symbol _glfwSwapBuffers
+EntryPoint.obj : error LNK2001: unresolved external symbol _glfwSetFramebufferSizeCallback
+EntryPoint.obj : error LNK2001: unresolved external symbol __imp__glViewport@16
+EntryPoint.obj : error LNK2001: unresolved external symbol __imp__glClear@4
+EntryPoint.obj : error LNK2001: unresolved external symbol _glfwGetKey
+EntryPoint.obj : error LNK2001: unresolved external symbol __imp__glEnable@4
+EntryPoint.obj : error LNK2001: unresolved external symbol _glfwTerminate
+EntryPoint.obj : error LNK2001: unresolved external symbol _glfwPollEvents
+EntryPoint.obj : error LNK2001: unresolved external symbol _glfwInit
+EntryPoint.obj : error LNK2001: unresolved external symbol _glfwSetWindowShouldClose
+EntryPoint.obj : error LNK2001: unresolved external symbol _glfwCreateWindow
+EntryPoint.obj : error LNK2001: unresolved external symbol _glfwWindowHint
+EntryPoint.obj : error LNK2001: unresolved external symbol _glfwMakeContextCurrent
+EntryPoint.obj : error LNK2001: unresolved external symbol __imp__glClearColor@16
+EntryPoint.obj : error LNK2001: unresolved external symbol __imp__glDepthFunc@4
+EntryPoint.obj : error LNK2001: unresolved external symbol __imp__glGetString@4
+EntryPoint.obj : error LNK2001: unresolved external symbol _glfwWindowShouldClose
+C:\projects\ragdoll\ragdollphys\Release\ragdollphys.exe : fatal error LNK1120: 17 unresolved externals

@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\MATH">
+      <UniqueIdentifier>{47c0ea89-7d26-4e03-947c-3b2a4a811a8b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\SCENE">
+      <UniqueIdentifier>{0b36a511-5e96-4d27-aeda-32e6c78c6baa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\MATH">
+      <UniqueIdentifier>{d9f12dc7-965c-4406-a542-3da61625f72f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\SCENE">
+      <UniqueIdentifier>{ba472e99-0d0c-41e9-8153-b5e92130f008}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="EntryPoint.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QuadTree.h">
+      <Filter>Header Files\MATH</Filter>
+    </ClCompile>
+    <ClCompile Include="VectorLib.cpp">
+      <Filter>Source Files\MATH</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderWindow.cpp">
+      <Filter>Source Files\SCENE</Filter>
+    </ClCompile>
+    <ClCompile Include="Quaternion.cpp">
+      <Filter>Source Files\MATH</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector2i.cpp">
+      <Filter>Source Files\MATH</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector3f.cpp">
+      <Filter>Source Files\MATH</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector4f.cpp">
+      <Filter>Source Files\MATH</Filter>
+    </ClCompile>
+    <ClCompile Include="Matrix4.cpp">
+      <Filter>Source Files\MATH</Filter>
+    </ClCompile>
+    <ClCompile Include="AABB.cpp">
+      <Filter>Source Files\MATH</Filter>
+    </ClCompile>
+    <ClCompile Include="QueryRenderSample.cpp">
+      <Filter>Source Files\MATH</Filter>
+    </ClCompile>
+    <ClCompile Include="QuadTree.cpp">
+      <Filter>Source Files\MATH</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AABB.h">
+      <Filter>Header Files\MATH</Filter>
+    </ClInclude>
+    <ClInclude Include="VectorLib.h">
+      <Filter>Header Files\MATH</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderQuadTree.h">
+      <Filter>Header Files\SCENE</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderWindow.h">
+      <Filter>Header Files\SCENE</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderProgram.h">
+      <Filter>Header Files\SCENE</Filter>
+    </ClInclude>
+    <ClInclude Include="MathLib.h">
+      <Filter>Header Files\MATH</Filter>
+    </ClInclude>
+    <ClInclude Include="Quaternion.h">
+      <Filter>Header Files\MATH</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector2i.h">
+      <Filter>Header Files\MATH</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector2f.cpp">
+      <Filter>Source Files\MATH</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector2f.h">
+      <Filter>Header Files\MATH</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector3f.h">
+      <Filter>Header Files\MATH</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector4f.h">
+      <Filter>Header Files\MATH</Filter>
+    </ClInclude>
+    <ClInclude Include="Matrix4.h">
+      <Filter>Header Files\MATH</Filter>
+    </ClInclude>
+    <ClInclude Include="QueryRenderSample.h">
+      <Filter>Header Files\MATH</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

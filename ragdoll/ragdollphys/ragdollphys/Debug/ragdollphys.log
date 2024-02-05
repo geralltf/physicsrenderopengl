@@ -1,0 +1,56 @@
+﻿  EntryPoint.cpp
+C:\projects\ragdoll\ragdollphys\ragdollphys\QuadTree.h(57,28): warning C4018: '<': signed/unsigned mismatch
+  (compiling source file 'EntryPoint.cpp')
+  
+C:\projects\ragdoll\ragdollphys\ragdollphys\QuadTree.h(95,27): warning C4018: '<': signed/unsigned mismatch
+  (compiling source file 'EntryPoint.cpp')
+  
+C:\projects\ragdoll\ragdollphys\ragdollphys\QuadTree.h(165,27): warning C4018: '<': signed/unsigned mismatch
+  (compiling source file 'EntryPoint.cpp')
+  
+C:\projects\ragdoll\ragdollphys\ragdollphys\RenderQuadTree.h(31,21): warning C4018: '<': signed/unsigned mismatch
+  (compiling source file 'EntryPoint.cpp')
+  
+  QuadTree.h
+C:\projects\ragdoll\ragdollphys\ragdollphys\QuadTree.h(57,28): warning C4018: '<': signed/unsigned mismatch
+C:\projects\ragdoll\ragdollphys\ragdollphys\QuadTree.h(95,27): warning C4018: '<': signed/unsigned mismatch
+C:\projects\ragdoll\ragdollphys\ragdollphys\QuadTree.h(165,27): warning C4018: '<': signed/unsigned mismatch
+  RenderWindow.cpp
+C:\projects\ragdoll\ragdollphys\ragdollphys\QuadTree.h(57,28): warning C4018: '<': signed/unsigned mismatch
+  (compiling source file 'RenderWindow.cpp')
+  
+C:\projects\ragdoll\ragdollphys\ragdollphys\QuadTree.h(95,27): warning C4018: '<': signed/unsigned mismatch
+  (compiling source file 'RenderWindow.cpp')
+  
+C:\projects\ragdoll\ragdollphys\ragdollphys\QuadTree.h(165,27): warning C4018: '<': signed/unsigned mismatch
+  (compiling source file 'RenderWindow.cpp')
+  
+C:\projects\ragdoll\ragdollphys\ragdollphys\RenderQuadTree.h(31,21): warning C4018: '<': signed/unsigned mismatch
+  (compiling source file 'RenderWindow.cpp')
+  
+  Vector2f.cpp
+  Generating Code...
+EntryPoint.obj : error LNK2019: unresolved external symbol _glBindBuffer@8 referenced in function "public: bool __thiscall ShaderProgram::LoadShaderProgram(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > *,enum SHADER_TYPE)" (?LoadShaderProgram@ShaderProgram@@QAE_NPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@W4SHADER_TYPE@@@Z)
+EntryPoint.obj : error LNK2019: unresolved external symbol _glGenBuffers@8 referenced in function "public: bool __thiscall ShaderProgram::LoadShaderProgram(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > *,enum SHADER_TYPE)" (?LoadShaderProgram@ShaderProgram@@QAE_NPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@W4SHADER_TYPE@@@Z)
+EntryPoint.obj : error LNK2019: unresolved external symbol _glBufferData@16 referenced in function "public: bool __thiscall ShaderProgram::LoadShaderProgram(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > *,enum SHADER_TYPE)" (?LoadShaderProgram@ShaderProgram@@QAE_NPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@W4SHADER_TYPE@@@Z)
+EntryPoint.obj : error LNK2019: unresolved external symbol _glAttachShader@8 referenced in function "public: bool __thiscall ShaderProgram::LoadShaderProgram(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > *,enum SHADER_TYPE)" (?LoadShaderProgram@ShaderProgram@@QAE_NPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@W4SHADER_TYPE@@@Z)
+EntryPoint.obj : error LNK2019: unresolved external symbol _glCompileShader@4 referenced in function "public: bool __thiscall ShaderProgram::LoadShaderProgram(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > *,enum SHADER_TYPE)" (?LoadShaderProgram@ShaderProgram@@QAE_NPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@W4SHADER_TYPE@@@Z)
+EntryPoint.obj : error LNK2019: unresolved external symbol _glCreateProgram@0 referenced in function "public: __thiscall ShaderProgram::ShaderProgram(void)" (??0ShaderProgram@@QAE@XZ)
+EntryPoint.obj : error LNK2019: unresolved external symbol _glCreateShader@4 referenced in function "public: bool __thiscall ShaderProgram::LoadShaderProgram(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > *,enum SHADER_TYPE)" (?LoadShaderProgram@ShaderProgram@@QAE_NPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@W4SHADER_TYPE@@@Z)
+EntryPoint.obj : error LNK2019: unresolved external symbol _glGetShaderiv@12 referenced in function "public: bool __thiscall ShaderProgram::LoadShaderProgram(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > *,enum SHADER_TYPE)" (?LoadShaderProgram@ShaderProgram@@QAE_NPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@W4SHADER_TYPE@@@Z)
+EntryPoint.obj : error LNK2019: unresolved external symbol _glGetShaderInfoLog@16 referenced in function "public: bool __thiscall ShaderProgram::LoadShaderProgram(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > *,enum SHADER_TYPE)" (?LoadShaderProgram@ShaderProgram@@QAE_NPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@W4SHADER_TYPE@@@Z)
+EntryPoint.obj : error LNK2019: unresolved external symbol _glLinkProgram@4 referenced in function "public: bool __thiscall ShaderProgram::LoadShaderProgram(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > *,enum SHADER_TYPE)" (?LoadShaderProgram@ShaderProgram@@QAE_NPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@W4SHADER_TYPE@@@Z)
+EntryPoint.obj : error LNK2019: unresolved external symbol _glShaderSource@16 referenced in function "public: bool __thiscall ShaderProgram::LoadShaderProgram(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > *,enum SHADER_TYPE)" (?LoadShaderProgram@ShaderProgram@@QAE_NPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@W4SHADER_TYPE@@@Z)
+EntryPoint.obj : error LNK2019: unresolved external symbol _glewInit referenced in function "private: void __thiscall RenderWindow::framebufer_render_loop(void)" (?framebufer_render_loop@RenderWindow@@AAEXXZ)
+EntryPoint.obj : error LNK2019: unresolved external symbol __imp__glfwInit referenced in function "public: __thiscall RenderWindow::RenderWindow(int,int,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > *)" (??0RenderWindow@@QAE@HHPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z)
+EntryPoint.obj : error LNK2019: unresolved external symbol __imp__glfwTerminate referenced in function "public: __thiscall RenderWindow::RenderWindow(int,int,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > *)" (??0RenderWindow@@QAE@HHPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z)
+EntryPoint.obj : error LNK2019: unresolved external symbol __imp__glfwWindowHint referenced in function "public: __thiscall RenderWindow::RenderWindow(int,int,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > *)" (??0RenderWindow@@QAE@HHPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z)
+EntryPoint.obj : error LNK2019: unresolved external symbol __imp__glfwCreateWindow referenced in function "public: __thiscall RenderWindow::RenderWindow(int,int,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > *)" (??0RenderWindow@@QAE@HHPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z)
+EntryPoint.obj : error LNK2019: unresolved external symbol __imp__glfwWindowShouldClose referenced in function "public: void __thiscall RenderWindow::render_loop(void)" (?render_loop@RenderWindow@@QAEXXZ)
+EntryPoint.obj : error LNK2019: unresolved external symbol __imp__glfwSetWindowShouldClose referenced in function "private: void __thiscall RenderWindow::process_input(struct GLFWwindow *)" (?process_input@RenderWindow@@AAEXPAUGLFWwindow@@@Z)
+EntryPoint.obj : error LNK2019: unresolved external symbol __imp__glfwSetFramebufferSizeCallback referenced in function "public: __thiscall RenderWindow::RenderWindow(int,int,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > *)" (??0RenderWindow@@QAE@HHPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z)
+EntryPoint.obj : error LNK2019: unresolved external symbol __imp__glfwPollEvents referenced in function "public: void __thiscall RenderWindow::render_loop(void)" (?render_loop@RenderWindow@@QAEXXZ)
+EntryPoint.obj : error LNK2019: unresolved external symbol __imp__glfwGetKey referenced in function "private: void __thiscall RenderWindow::process_input(struct GLFWwindow *)" (?process_input@RenderWindow@@AAEXPAUGLFWwindow@@@Z)
+EntryPoint.obj : error LNK2019: unresolved external symbol __imp__glfwMakeContextCurrent referenced in function "public: __thiscall RenderWindow::RenderWindow(int,int,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > *)" (??0RenderWindow@@QAE@HHPAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z)
+EntryPoint.obj : error LNK2019: unresolved external symbol __imp__glfwSwapBuffers referenced in function "public: void __thiscall RenderWindow::render_loop(void)" (?render_loop@RenderWindow@@QAEXXZ)
+C:\projects\ragdoll\ragdollphys\Debug\ragdollphys.exe : fatal error LNK1120: 23 unresolved externals

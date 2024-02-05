@@ -1,0 +1,46 @@
+﻿  AABB.cpp
+C:\projects\ragdoll\ragdollphys\ragdollphys\ShaderProgram.h(173,19): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  (compiling source file 'AABB.cpp')
+  
+C:\projects\ragdoll\ragdollphys\ragdollphys\AABB.cpp(257,18): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  EntryPoint.cpp
+C:\projects\ragdoll\ragdollphys\ragdollphys\ShaderProgram.h(173,19): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  (compiling source file 'EntryPoint.cpp')
+  
+  Matrix4.cpp
+C:\projects\ragdoll\ragdollphys\ragdollphys\Matrix4.cpp(819,42): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\projects\ragdoll\ragdollphys\ragdollphys\Matrix4.cpp(819,24): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\projects\ragdoll\ragdollphys\ragdollphys\Matrix4.cpp(820,43): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\projects\ragdoll\ragdollphys\ragdollphys\Matrix4.cpp(820,19): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  QuadTree.cpp
+C:\projects\ragdoll\ragdollphys\ragdollphys\ShaderProgram.h(173,19): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  (compiling source file 'QuadTree.cpp')
+  
+  QuadTree.h
+C:\projects\ragdoll\ragdollphys\ragdollphys\ShaderProgram.h(173,19): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  (compiling source file 'QuadTree.h')
+  
+  Quaternion.cpp
+C:\projects\ragdoll\ragdollphys\ragdollphys\Quaternion.cpp(208,48): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  QueryRenderSample.cpp
+C:\projects\ragdoll\ragdollphys\ragdollphys\ShaderProgram.h(173,19): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  (compiling source file 'QueryRenderSample.cpp')
+  
+  RenderWindow.cpp
+C:\projects\ragdoll\ragdollphys\ragdollphys\ShaderProgram.h(173,19): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  (compiling source file 'RenderWindow.cpp')
+  
+  Vector2i.cpp
+C:\projects\ragdoll\ragdollphys\ragdollphys\Vector2i.cpp(55,40): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\projects\ragdoll\ragdollphys\ragdollphys\Vector2i.cpp(55,37): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\projects\ragdoll\ragdollphys\ragdollphys\Vector2i.cpp(78,16): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+C:\projects\ragdoll\ragdollphys\ragdollphys\Vector2i.cpp(83,20): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
+  Vector3f.cpp
+  Vector4f.cpp
+  VectorLib.cpp
+  Generating Code...
+C:\projects\ragdoll\ragdollphys\ragdollphys\Matrix4.cpp(278): warning C4715: 'Matrix4::InvertAffine': not all control paths return a value
+C:\projects\ragdoll\ragdollphys\ragdollphys\Matrix4.cpp(505): warning C4172: returning address of local variable or temporary: empty
+x64\Debug\QuadTree.obj : warning LNK4042: object specified more than once; extras ignored
+LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
+  ragdollphys.vcxproj -> C:\projects\ragdoll\ragdollphys\x64\Debug\ragdollphys.exe
