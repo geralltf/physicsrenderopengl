@@ -85,37 +85,51 @@ void RenderWindow::process_input(GLFWwindow* window)
 		std::cout << "QUIT." << std::endl;
 		glfwSetWindowShouldClose(window, true);
 	}
-	const float camera_speed = 0.001f; // adjust accordingly
+	
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
-		camera_pos = camera_pos->Add(new Vector3f(0.0f, 0.0f, camera_speed * 1.0f));
+		camera_pos = Vector3f::Add(camera_pos, Vector3f::Multiply(new Vector3f(camera_speed, camera_speed, camera_speed), camera_front));
 	}
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
-		camera_pos = camera_pos->Add(new Vector3f(0.0f, 0.0f, -camera_speed * 1.0f));
+		camera_pos = Vector3f::Subtract(camera_pos, Vector3f::Multiply(new Vector3f(camera_speed, camera_speed, camera_speed), camera_front));
 	}
 	if (glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS) {
 		camera_pos = camera_pos->Add(new Vector3f(0.0f, camera_speed * 1.0f, 0.0f));
 	}
 	if (glfwGetKey(window, GLFW_KEY_F) == GLFW_PRESS) {
-		camera_pos = camera_pos->Add(new Vector3f(0.0f, -camera_speed * 1.0f, 0.0f));
+		camera_pos = camera_pos->Add(new Vector3f(0.0f, -camera_speed * 1.0f, 0.0f));		
 	}
 	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
 		//Vector3f* delta;
 		//delta = Vector3f::Cross(new Vector3f(0.0f, 0.0f, camera_speed * 1.0f), Vector3f::Up);
 		//delta = delta->Normalised();
 		//camera_pos = camera_pos->Add(new Vector3f(delta->x * camera_speed, delta->y * camera_speed, delta->z * camera_speed));
-		camera_pos = camera_pos->Add(new Vector3f(camera_speed * 1.0f, 0.0f, 0.0f));
+		
+		//camera_pos = camera_pos->Add(new Vector3f(camera_speed * 1.0f, 0.0f, 0.0f));
+		Vector3f* directionality;
+		directionality = Vector3f::Scale(Vector3f::Cross(camera_front, camera_up)->Normalised(), camera_speed);
+		camera_pos = Vector3f::Subtract(camera_pos, directionality);
+
+		// cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
 	}
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
 		//Vector3f* delta;
 		//delta = Vector3f::Cross(new Vector3f(0.0f, 0.0f, camera_speed * -1.0f), Vector3f::Up);
 		//delta = delta->Normalised();
-		camera_pos = camera_pos->Add(new Vector3f(-camera_speed * 1.0f, 0.0f, 0.0f));
+		
+		//camera_pos = camera_pos->Add(new Vector3f(-camera_speed * 1.0f, 0.0f, 0.0f));
+		
+		Vector3f* directionality;
+		directionality = Vector3f::Scale(Vector3f::Cross(camera_front, camera_up)->Normalised(), camera_speed);
+		camera_pos = Vector3f::Add(camera_pos, directionality);
+
+		
 		//camera_pos = camera_pos->Add(new Vector3f(delta->x * camera_speed, delta->y * camera_speed, delta->z * camera_speed));
 		//camera_pos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+		// cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
 	}
 	if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS) {
-		camera_orientation = Quaternion::Euler(0.0f, camera_angle, 0.0f);
-		camera_angle+=camera_speed * 1.0f;
+		//camera_orientation = Quaternion::Euler(0.0f, camera_angle, 0.0f);
+		camera_angle_pitch+=camera_speed * 1.0f;
 		//camera->RotateY(camera_angle);
 
 		//float _upAngle = camera_angle;
@@ -127,8 +141,8 @@ void RenderWindow::process_input(GLFWwindow* window)
 		//camera = Matrix4::Multiply(camera, mat);
 	}
 	if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS) {
-		camera_orientation = Quaternion::Euler(0.0f, camera_angle, 0.0f);
-		camera_angle-= camera_speed * 1.0f;
+		//camera_orientation = Quaternion::Euler(0.0f, camera_angle, 0.0f);
+		camera_angle_pitch-= camera_speed * 1.0f;
 		//camera->RotateY(camera_angle);
 
 		//float _upAngle = camera_angle;
@@ -140,6 +154,26 @@ void RenderWindow::process_input(GLFWwindow* window)
 		//camera = Matrix4::Multiply(camera, mat);
 	}
 
+	
+
+	if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
+		camera_angle_pitch += turnSpeed;
+	}
+	if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
+		camera_angle_pitch -= turnSpeed;
+	}
+	if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) {
+		camera_angle_yaw += turnSpeed;
+	}
+	if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) {
+		camera_angle_yaw -= turnSpeed;
+	}		
+	if (glfwGetKey(window, GLFW_KEY_O) == GLFW_PRESS) {
+		camera_angle_roll += turnSpeed;
+	}
+	if (glfwGetKey(window, GLFW_KEY_L) == GLFW_PRESS) {
+		camera_angle_roll -= turnSpeed;
+	}
 	if (glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS) {
 		is_fullscreen = !is_fullscreen;
 
@@ -167,5 +201,5 @@ void RenderWindow::framebufer_render_loop()
 	glEnable(GL_DEPTH_TEST); // enable depth-testing
 	glDepthFunc(GL_LESS); // depth-testing interprets a smaller value as "closer"
 
-	render_scene->render(camera, camera_pos, camera_orientation, camera_angle);
+	render_scene->render(camera, camera_pos, camera_orientation, camera_angle_pitch, camera_angle_yaw, camera_angle_roll, &camera_front, &camera_up);
 }

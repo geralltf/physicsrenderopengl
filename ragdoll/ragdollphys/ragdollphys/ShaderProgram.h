@@ -152,7 +152,7 @@ public:
 		}
 		has_init = true;
 	}
-	void use(Matrix4* camera, Vector3f* camera_pos, Quaternion* camera_orientation, float cameraAngle) {
+	void use(Matrix4* camera, Vector3f* camera_pos, Quaternion* camera_orientation, float camera_angle_pitch, float camera_angle_yaw, float camera_angle_roll, Vector3f** camera_front, Vector3f** camera_up) {
 		//glUseProgram(shaderProgram);
 		//glBindVertexArray(VAO);
 		// 0. copy our vertices array in a buffer for OpenGL to use
@@ -182,19 +182,61 @@ public:
 		//camera->Translate(Quaternion::Multiply(camera_orientation, camera_pos->Add(new Vector3f(0.0f, 0.0f, -2.0f))));
 		//camera->Translate();
 		
-		Matrix4* cam_transl = Matrix4::CreateTranslationMatrix(camera_pos->Add(new Vector3f(0.0f, 0.0f, -2.0f)));
+		Vector3f* cam_position = camera_pos->Add(new Vector3f(0.0f, 0.0f, -2.0f));
+
+		Matrix4* cam_transl = Matrix4::CreateTranslationMatrix(cam_position);
 
 		//camera->Scale(new Vector3f(0.1f, 0.1f, 0.1f));
+		//auto mode =  glfwGetVideoMode(glfwGetPrimaryMonitor());
+		
+		//Matrix4* projection = Matrix4::Perspective(45, (float)(mode->width) / (float)(mode->height), 0.0001f, 100.0f);
 		Matrix4* projection = Matrix4::Perspective(45, 800.0f / 600.0f, 0.0001f, 100.0f);
+
 		Matrix4* model = Matrix4::Identity();
 
-		//Matrix4* lookAt = Matrix4::LookAt(camera_pos->Add(new Vector3f(0.0f, 0.0f, -2.0f)), Vector3f::Forward, Vector3f::Up);
-		
-		Matrix4* cam_rot = Matrix4::CreateRotatationMatrix(Vector3f::Up, cameraAngle);
+		//Matrix4* cam_rot = Matrix4::CreateRotatationMatrix(Matrix4::TransformVector(camera, Vector3f::Up), cameraAngle);
+		//camera_pos = Matrix4::TransformVector(cam_rot, camera_pos->Add(Vector3f::Forward));
 
+		//Quaternion* qrot = Quaternion::Euler(0.0f, Deg2Rad * 1.0f * cameraAngle, 0.0f);
+		//Vector3f* forward = new Vector3f(0.0f, 0.0f, 1.0f);
+		//Vector3f* upward = new Vector3f(0.0f, 1.0f, 0.0f);
+		//Quaternion* qrot = Quaternion::LookRotation(forward, upward);
+		//Quaternion* q2 = Quaternion::Euler(0.0f, Deg2Rad * 1.0f * cameraAngle, 0.0f);
+		//qrot = Quaternion::Multiply(qrot, q2);
 
+		Vector3f* right = Quaternion::Multiply(camera_orientation, new Vector3f(1.0f, 0.0f, 0.0f))->Normalised();
+		Vector3f* up = Quaternion::Multiply(camera_orientation, new Vector3f(0.0f, 1.0f, 0.0f))->Normalised();
+		Vector3f* direction = Quaternion::Multiply(camera_orientation, new Vector3f(0.0f, 0.0f, -1.0f))->Normalised();
+
+		Matrix4* cam_rot2 = Matrix4::CreateRotatationMatrix(camera_orientation);
+		Matrix4* cam_rot = Matrix4::AnglesToRotationMatrix(new Vector3f(
+			0.0f, 1.0f * camera_angle_pitch * 10.0f, 0.0f
+		));
 		//model = camera;
-		camera = Matrix4::Multiply(cam_transl, Matrix4::Multiply(camera, cam_rot));
+		//Quaternion::Multiply()
+		//camera = Matrix4::LookAt(cam_position, new Vector3f(0.0f,0.0f,0.0f), up);
+
+		//camera = Matrix4::Multiply(camera, Matrix4::Multiply(cam_rot2, Matrix4::Multiply(cam_rot, cam_transl)));
+		//camera = Matrix4::Multiply(camera, cam_rot);
+
+		camera = Matrix4::Multiply(camera, cam_transl);
+		Matrix4* rotX = Matrix4::CreateRotationXMatrix(camera_angle_pitch);
+		Matrix4* rotY = Matrix4::CreateRotationYMatrix(camera_angle_yaw);
+		Matrix4* rotZ = Matrix4::CreateRotationZMatrix(camera_angle_roll);
+		camera = Matrix4::Multiply(camera, rotX);
+		camera = Matrix4::Multiply(camera, rotY);
+		camera = Matrix4::Multiply(camera, rotZ);
+		Vector3f* cam_forward = Matrix4::TransformVector(camera, new Vector3f(0.0f, 0.0f, 1.0f))->Normalised();
+		Vector3f* cam_up = Matrix4::TransformVector(camera, new Vector3f(0.0f, 1.0f, 0.0f))->Normalised();
+		*camera_front = cam_forward;
+		*camera_up = cam_up;
+
+		//Vector3f* cameraPos = new Vector3f(0.0f, 0.0f, 3.0f);
+		//Vector3f* cameraFront = new Vector3f(0.0f, 0.0f, -1.0f);
+		//Vector3f* cameraUp = new Vector3f(0.0f, 1.0f, 0.0f);
+		//camera = Matrix4::LookAt(cam_position, Vector3f::Add(cam_position, cameraFront), cameraUp);
+
+		//camera = camera->Inverse();
 		//camera = lookAt;
 
 		

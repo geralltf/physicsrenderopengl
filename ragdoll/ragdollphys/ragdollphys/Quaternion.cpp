@@ -164,12 +164,12 @@ Vector up = Vector::Cross(forward, right);*/
 Quaternion* Quaternion::Euler(float x, float y, float z)
 {
     // Assuming the angles are in radians.
-    float c1 = cos(x / 2);
-    float s1 = sin(x / 2);
-    float c2 = cos(y / 2);
-    float s2 = sin(y / 2);
-    float c3 = cos(z / 2);
-    float s3 = sin(z / 2);
+    float c1 = cos(x / 2.0f);
+    float s1 = sin(x / 2.0f);
+    float c2 = cos(y / 2.0f);
+    float s2 = sin(y / 2.0f);
+    float c3 = cos(z / 2.0f);
+    float s3 = sin(z / 2.0f);
     float c1c2 = c1 * c2;
     float s1s2 = s1 * s2;
     Quaternion* q = new Quaternion();
@@ -178,6 +178,27 @@ Quaternion* Quaternion::Euler(float x, float y, float z)
     q->y = s1 * c2 * c3 + c1 * s2 * s3;
     q->z = c1 * s2 * c3 - s1 * c2 * s3;
     return q;
+}
+
+Quaternion* Quaternion::FromAxisAngle(Vector3f* axis, float angle)
+{
+    if (axis->MagnitudeSquared() == 0.0f)
+    {
+        return Identity();
+    }
+
+    Quaternion* result = Identity();
+
+    angle *= 0.5f;
+    axis = axis->Normalise();
+    Vector3f* scaled_axis  = Vector3f::Scale(axis, (float)sin(angle));
+    result->x = scaled_axis->x;
+    result->y = scaled_axis->y;
+    result->z = scaled_axis->z;
+    result->w = (float)cos(angle);
+    result = result->Normalised();
+
+    return result;
 }
 
 void Quaternion::ToAxisAngle(Vector3f** axis, float** angle)
@@ -293,16 +314,42 @@ Vector3f* Quaternion::Multiply(Quaternion* left, Vector3f* right)
     return Multiply(left, new Vector4f(right, 0))->xyz();
 }
 
+//Quaternion* Quaternion::Multiply(Quaternion* left, Quaternion* right)
+//{
+//    float w;
+//    w = (left->w * right->w) - Vector3f::Dot(left->xyz(), right->xyz());
+//    return new Quaternion(
+//        Vector3f::Add(Vector3f::Add(Vector3f::Scale(left->xyz(), right->w),
+//            Vector3f::Scale(right->xyz(), left->w)),
+//            Vector3f::Cross(left->xyz(), right->xyz())),
+//        w
+//    );
+//}
+
+
+
 Quaternion* Quaternion::Multiply(Quaternion* left, Quaternion* right)
 {
-    float w;
-    w = (left->w * right->w) - Vector3f::Dot(left->xyz(), right->xyz());
-    return new Quaternion(
-        Vector3f::Add(Vector3f::Add(Vector3f::Scale(left->xyz(), right->w),
-            Vector3f::Scale(right->xyz(), left->w)),
-            Vector3f::Cross(left->xyz(), right->xyz())),
-        w
-    );
+    Vector3f* v1 = new Vector3f(left->x, left->y, left->z);
+    Vector3f* v2 = new Vector3f(right->x, right->y, right->z);
+
+    Vector3f* cross = Vector3f::Cross(v1, v2);                   // v x v'
+    float dot = Vector3f::Dot(v1, v2);                         // v . v'
+
+    Vector3f* v3 = Vector3f::Add(cross, Vector3f::Add(
+        Vector3f::Scale(v2, left->w), Vector3f::Scale(v1, right->w)
+    ));   // v x v' + sv' + s'v
+
+    Quaternion* result;
+
+    result = new Quaternion(left->w * right->w - dot, v3->x, v3->y, v3->z);
+
+    return result;
+    //Quaternion* result;
+    //result = new Quaternion(
+    //    Vector3f::Add(Vector3f::Add(Vector3f::Scale(left->xyz(), right->w), Vector3f::Scale(right->xyz(), left->w)), Vector3f::Cross(left->xyz(), right->xyz())),
+    //    left->w * right->w - Vector3f::Dot(left->xyz(), right->xyz()));
+    //return result;
 }
 
 Quaternion* Quaternion::Scale(Quaternion* quaternion, float scale)

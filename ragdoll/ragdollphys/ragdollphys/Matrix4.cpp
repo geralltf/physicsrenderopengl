@@ -531,6 +531,106 @@ float& Matrix4::operator[](const int index)
 //	return Matrix4::Multiply((Matrix4*)this, right->xyzw());
 //}
 
+Matrix4* Matrix4::AnglesToRotationMatrix(Vector3f* angles)
+{
+	float sx, sy, sz, cx, cy, cz, theta;
+	Vector3f* left;
+	Vector3f* up;
+	Vector3f* forward;
+
+	// rotation angle about X-axis (pitch)
+	theta = angles->x * Deg2Rad;
+	sx = sinf(theta);
+	cx = cosf(theta);
+
+	// rotation angle about Y-axis (yaw)
+	theta = -angles->y * Deg2Rad;
+	sy = sinf(theta);
+	cy = cosf(theta);
+
+	// rotation angle about Z-axis (roll)
+	theta = angles->z * Deg2Rad;
+	sz = sinf(theta);
+	cz = cosf(theta);
+
+	// determine left axis
+	left = new Vector3f(
+		cy * cz,
+		sx * sy * cz + cx * sz,
+		-cx * sy * cz + sx * sz
+	);
+
+	// determine up axis
+	up = new Vector3f(
+		-cy * sz,
+		-sx * sy * sz + cx * cz,
+		cx * sy * sz + sx * cz
+	);
+
+	// determine forward axis
+	forward = new Vector3f(
+		sy,
+		-sx * cy,
+		cx * cy
+	);
+
+	// construct rotation matrix
+	Matrix4* matrix = Identity();
+	matrix->Column0(left->xyzw());
+	matrix->Column1(up->xyzw());
+	matrix->Column2(forward->xyzw());
+
+	return matrix;
+}
+
+Matrix4* Matrix4::CreateFromAxisAngle(Vector3f* axis, float angle)
+{
+	// normalize and create a local copy of the vector.
+	axis = axis->Normalise();
+	float axisX = axis->x;
+	float axisY = axis->y;
+	float axisZ = axis->z;
+
+	// calculate angles
+	float cosine = (float)cos(-angle);
+	float sine = (float)sin(-angle);
+	float t = 1.0f - cosine;
+
+	// do the conversion math once
+	float tXX = t * axisX * axisX,
+		tXY = t * axisX * axisY,
+		tXZ = t * axisX * axisZ,
+		tYY = t * axisY * axisY,
+		tYZ = t * axisY * axisZ,
+		tZZ = t * axisZ * axisZ;
+
+	float sinX = sine * axisX,
+		sinY = sine * axisY,
+		sinZ = sine * axisZ;
+
+	Matrix4* result = Identity();
+	result->Row0(new Vector4f(
+		tXX + cosine,
+		tXY - sinZ,
+		tXZ + sinY,
+		0.0f
+	));
+	result->Row1(new Vector4f(
+		tXY + sinZ,
+		tYY + cosine,
+		tYZ - sinX,
+		0.0f
+	));
+	result->Row2(new Vector4f(
+		tXZ - sinY,
+		tYZ + sinX,
+		tZZ + cosine,
+		0.0f
+	));
+	result->Row3(new Vector4f(0.0f, 0.0f, 0.0f, 1.0f));
+	return result;
+}
+
 Matrix4* Matrix4::Multiply(Matrix4* left, Matrix4* right)
 {
 	Matrix4* result = new Matrix4();
@@ -718,7 +818,7 @@ Matrix4* Matrix4::CreateRotatationMatrix(Vector3f* axis, float angle)
 	float sine = sin(-angle);
 	float t = 1.0f - cosine;
 
-	axis->Normalise();
+	axis = axis->Normalise();
 
 	Matrix4* result = new Matrix4();
 	result->Row0(new Vector4f(
@@ -847,7 +947,7 @@ Matrix4* Matrix4::LookAt(Vector3f* eye, Vector3f* target, Vector3f* up)
 		new Vector4f(x->x, y->x, z->x, 0.0f),
 		new Vector4f(x->y, y->y, z->y, 0.0f),
 		new Vector4f(x->z, y->z, z->z, 0.0f),
-		Vector4f::UnitW
+		new Vector4f(0.0f, 0.0f, 0.0f, 1.0f)
 	);
 
 	Matrix4* trans = CreateTranslationMatrix(new Vector3f(-eye->x, -eye->y, -eye->z));

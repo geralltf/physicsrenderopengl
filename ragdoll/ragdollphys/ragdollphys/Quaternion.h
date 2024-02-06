@@ -77,6 +77,8 @@ public:
 
     static Quaternion* Euler(float x, float y, float z);
 
+    static Quaternion* FromAxisAngle(Vector3f* axis, float angle);
+
     void ToAxisAngle(Vector3f** axis, float** angle);
 
     Vector4f* ToAxisAngle();

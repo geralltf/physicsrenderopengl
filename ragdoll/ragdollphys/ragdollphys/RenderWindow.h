@@ -54,7 +54,13 @@ private:
 	Matrix4* camera;
 	Vector3f* camera_pos;
 	Quaternion* camera_orientation;
-	float camera_angle = 0.0f;
+	float camera_angle_pitch = 0.0f;
+	float camera_angle_yaw = 0.0f;
+	float camera_angle_roll = 0.0f;
+	Vector3f* camera_front = new Vector3f(0.0f, 0.0f, 1.0f);
+	Vector3f* camera_up = new Vector3f(0.0f, 1.0f, 0.0f);
+	float turnSpeed = 0.001f;
+	float camera_speed = 0.001f;
 public:
 	RenderWindow(int width, int height, std::string* window_title, bool isfullscreen);
 	static void framebuffer_size_callback(GLFWwindow* window, int width, int height);

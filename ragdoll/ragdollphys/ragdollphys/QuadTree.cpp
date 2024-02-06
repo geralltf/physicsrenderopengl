@@ -43,7 +43,7 @@ bool QuadTree::insert(Vector2f* p)
 }
 
 // Find all points that appear within a range
-std::vector<QueryRenderSample*>* QuadTree::query_render_range(AABB* range, Matrix4* camera, Vector3f* camera_pos, Quaternion* camera_orientation, float cameraAngle)
+std::vector<QueryRenderSample*>* QuadTree::query_render_range(AABB* range, Matrix4* camera, Vector3f* camera_pos, Quaternion* camera_orientation, float camera_angle_pitch, float camera_angle_yaw, float camera_angle_roll, Vector3f** camera_front, Vector3f** camera_up)
 {
 	// Prepare an array of results
 	std::vector<QueryRenderSample*>* samples_in_range = new std::vector<QueryRenderSample*>();
@@ -63,7 +63,7 @@ std::vector<QueryRenderSample*>* QuadTree::query_render_range(AABB* range, Matri
 		auto point = points->at(p);
 		if (range->contains_point(point))
 		{
-			range->render(camera, camera_pos, camera_orientation, cameraAngle);
+			range->render(camera, camera_pos, camera_orientation, camera_angle_pitch, camera_angle_yaw, camera_angle_roll, camera_front, camera_up);
 
 			QueryRenderSample* sample = new QueryRenderSample();
 			if (sample->sample_points == nullptr) {
@@ -104,7 +104,7 @@ std::vector<QueryRenderSample*>* QuadTree::query_render_range(AABB* range, Matri
 	// Otherwise, add the points from the children
 	if (north_west != nullptr)
 	{
-		auto list = north_west->query_render_range(range, camera, camera_pos, camera_orientation, cameraAngle);
+		auto list = north_west->query_render_range(range, camera, camera_pos, camera_orientation, camera_angle_pitch, camera_angle_yaw, camera_angle_roll, camera_front, camera_up);
 		auto start = list->begin();
 		auto end = list->end();
 		samples_in_range->insert(samples_in_range->end(), start, end);
@@ -112,7 +112,7 @@ std::vector<QueryRenderSample*>* QuadTree::query_render_range(AABB* range, Matri
 
 	if (north_east != nullptr)
 	{
-		auto list = north_east->query_render_range(range, camera, camera_pos, camera_orientation, cameraAngle);
+		auto list = north_east->query_render_range(range, camera, camera_pos, camera_orientation, camera_angle_pitch, camera_angle_yaw, camera_angle_roll, camera_front, camera_up);
 		auto start = list->begin();
 		auto end = list->end();
 		samples_in_range->insert(samples_in_range->end(), start, end);
@@ -120,7 +120,7 @@ std::vector<QueryRenderSample*>* QuadTree::query_render_range(AABB* range, Matri
 
 	if (south_west != nullptr)
 	{
-		auto list = south_west->query_render_range(range, camera, camera_pos, camera_orientation, cameraAngle);
+		auto list = south_west->query_render_range(range, camera, camera_pos, camera_orientation, camera_angle_pitch, camera_angle_yaw, camera_angle_roll, camera_front, camera_up);
 		auto start = list->begin();
 		auto end = list->end();
 		samples_in_range->insert(samples_in_range->end(), start, end);
@@ -128,7 +128,7 @@ std::vector<QueryRenderSample*>* QuadTree::query_render_range(AABB* range, Matri
 
 	if (south_east != nullptr)
 	{
-		auto list = south_east->query_render_range(range, camera, camera_pos, camera_orientation, cameraAngle);
+		auto list = south_east->query_render_range(range, camera, camera_pos, camera_orientation, camera_angle_pitch, camera_angle_yaw, camera_angle_roll, camera_front, camera_up);
 		auto start = list->begin();
 		auto end = list->end();
 		samples_in_range->insert(samples_in_range->end(), start, end);

@@ -143,6 +143,9 @@ public:
     //Matrix4* operator*(Vector3f* right) const;
     //Matrix4* operator*(Vector2f* right) const;
 
+    static Matrix4* AnglesToRotationMatrix(Vector3f* angles);
+    static Matrix4* CreateFromAxisAngle(Vector3f* axis, float angle);
+
     static Matrix4* Multiply(Matrix4* left, Matrix4* right);
 
     static Matrix4* Multiply(Matrix4* left, Vector4f* right);

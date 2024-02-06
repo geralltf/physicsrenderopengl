@@ -8,10 +8,10 @@ C:\projects\ragdoll\ragdollphys\ragdollphys\ShaderProgram.h(173,19): warning C42
   (compiling source file 'EntryPoint.cpp')
   
   Matrix4.cpp
-C:\projects\ragdoll\ragdollphys\ragdollphys\Matrix4.cpp(819,42): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\projects\ragdoll\ragdollphys\ragdollphys\Matrix4.cpp(819,24): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\projects\ragdoll\ragdollphys\ragdollphys\Matrix4.cpp(820,43): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\projects\ragdoll\ragdollphys\ragdollphys\Matrix4.cpp(820,19): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\projects\ragdoll\ragdollphys\ragdollphys\Matrix4.cpp(919,42): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\projects\ragdoll\ragdollphys\ragdollphys\Matrix4.cpp(919,24): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\projects\ragdoll\ragdollphys\ragdollphys\Matrix4.cpp(920,43): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\projects\ragdoll\ragdollphys\ragdollphys\Matrix4.cpp(920,19): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   QuadTree.cpp
 C:\projects\ragdoll\ragdollphys\ragdollphys\ShaderProgram.h(173,19): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
   (compiling source file 'QuadTree.cpp')
@@ -21,7 +21,7 @@ C:\projects\ragdoll\ragdollphys\ragdollphys\ShaderProgram.h(173,19): warning C42
   (compiling source file 'QuadTree.h')
   
   Quaternion.cpp
-C:\projects\ragdoll\ragdollphys\ragdollphys\Quaternion.cpp(208,48): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\projects\ragdoll\ragdollphys\ragdollphys\Quaternion.cpp(229,48): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
   QueryRenderSample.cpp
 C:\projects\ragdoll\ragdollphys\ragdollphys\ShaderProgram.h(173,19): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
   (compiling source file 'QueryRenderSample.cpp')

@@ -10,7 +10,7 @@ uniform mat4 proj;
 
 void main()
 {
-    gl_Position = proj * view * model * vec4(aPos, 1.0);
+    gl_Position = proj * model * view  * vec4(aPos, 1.0);
 	//gl_Position = view * vec4(aPos, 1.0);
 	//gl_Position = vec4(aPos, 1.0);
 	vertexColor = vec4(0.5, 0.0, 0.0, 1.0); // set the output variable to a dark-red color
