@@ -14,7 +14,7 @@ bool AABB::contains_point(const Vector2f* point) {
 bool AABB::intersects_AABB(const AABB* other) {
 	return true;
 }
-void AABB::render(Matrix4* camera, Vector3f* camera_pos, Quaternion* camera_orientation, float camera_angle_pitch, float camera_angle_yaw, float camera_angle_roll, Vector3f** camera_front, Vector3f** camera_up) {
+void AABB::render(Matrix4* camera, Vector3f* camera_pos, Quaternion* camera_orientation, float camera_angle_pitch, float camera_angle_yaw, float camera_angle_roll, Vector3f** camera_front, Vector3f** camera_up, bool show_wireframe) {
 
 	//float width = 10.0f;
 	//float height = 10.0f;
@@ -310,6 +310,7 @@ void AABB::render(Matrix4* camera, Vector3f* camera_pos, Quaternion* camera_orie
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	//glEnableVertexAttribArray(0);
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	//glPolygonMode(GL_FRONT_AND_BACK, (show_wireframe? GL_LINE : GL_FILL));
 	//glDrawElements(GL_TRIANGLES, 0, 36, &indices);
 	//glDrawElements(GL_TRIANGLES, 36,  GL_UNSIGNED_INT, &indices);
 	glDrawArrays(GL_TRIANGLES, 0, 12 * 3);

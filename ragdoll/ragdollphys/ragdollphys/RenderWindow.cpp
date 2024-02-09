@@ -3,6 +3,20 @@
 std::vector<GLFWwindow*>* RenderWindow::contexts = nullptr;
 int RenderWindow::num_contexts = 0;
 
+void GLAPIENTRY
+MessageCallback(GLenum source,
+	GLenum type,
+	GLuint id,
+	GLenum severity,
+	GLsizei length,
+	const GLchar* message,
+	const void* userParam)
+{
+	fprintf(stderr, "GL CALLBACK: %s type = 0x%x, severity = 0x%x, message = %s\n",
+		(type == GL_DEBUG_TYPE_ERROR ? "** GL ERROR **" : ""),
+		type, severity, message);
+}
+
 RenderWindow::RenderWindow(int width, int height, std::string* window_title, bool isfullscreen) {
 	this->width = width;
 	this->height = height;
@@ -26,7 +40,8 @@ RenderWindow::RenderWindow(int width, int height, std::string* window_title, boo
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-	
+
+
 	window_context = glfwCreateWindow(this->width, this->height, window_title->c_str(), isfullscreen ? glfwGetPrimaryMonitor() : NULL, NULL);
 
 	if (window_context == NULL)
@@ -70,6 +85,10 @@ void RenderWindow::framebuffer_init()
 	const GLubyte* version = glGetString(GL_VERSION); // version as a string
 	std::cout << "Renderer: " << renderer << " ";
 	std::cout << "OpenGL version supported: " << version << std::endl;
+
+	// During init, enable debug output
+	glEnable(GL_DEBUG_OUTPUT);
+	glDebugMessageCallback(MessageCallback, 0);
 
 	AABB* scene_bounds = new AABB(Vector2f_ZERO, 5.0f);
 	QuadTree* scene_tree = new QuadTree(scene_bounds);
@@ -174,6 +193,9 @@ void RenderWindow::process_input(GLFWwindow* window)
 	if (glfwGetKey(window, GLFW_KEY_L) == GLFW_PRESS) {
 		camera_angle_roll -= turnSpeed;
 	}
+	if (glfwGetKey(window, GLFW_KEY_M) == GLFW_PRESS) {
+		show_wireframe = !show_wireframe;
+	}
 	if (glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS) {
 		is_fullscreen = !is_fullscreen;
 
@@ -201,5 +223,13 @@ void RenderWindow::framebufer_render_loop()
 	glEnable(GL_DEPTH_TEST); // enable depth-testing
 	glDepthFunc(GL_LESS); // depth-testing interprets a smaller value as "closer"
 
-	render_scene->render(camera, camera_pos, camera_orientation, camera_angle_pitch, camera_angle_yaw, camera_angle_roll, &camera_front, &camera_up);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	// check OpenGL error
+	GLenum err;
+	while ((err = glGetError()) != GL_NO_ERROR) {
+		std::cout << "OpenGL error: " << err << std::endl;
+	}
+
+	render_scene->render(camera, camera_pos, camera_orientation, camera_angle_pitch, camera_angle_yaw, camera_angle_roll, &camera_front, &camera_up, show_wireframe);
 }

@@ -1,6 +1,9 @@
 #ifndef SHADER_PROGRAM_H
 #define SHADER_PROGRAM_H
 
+#include "Model.h"
+#include "Texture2D.h"
+
 #include <string>
 #include <iostream>
 #include <istream>
@@ -41,6 +44,12 @@ public:
 	float* vertices;
 	bool has_init = false;
 
+	Model* test_model;
+	Texture2D* test_diffusemap;
+	Texture2D* test_specularmap;
+	Texture2D* test_normalmap;
+	Texture2D* test_emissivemap;
+
 	static std::string* read_text_file(std::string* file_name)
 	{
 		std::ifstream t(file_name->c_str());
@@ -48,9 +57,6 @@ public:
 		buffer << t.rdbuf();
 		std::string* result = new std::string(buffer.str());
 		return result;
-	}
-	ShaderProgram() {
-		shaderProgram = glCreateProgram();
 	}
 	ShaderProgram(std::string* vertex_file_name, std::string* frag_file_name) {
 		shaderProgram = glCreateProgram();
@@ -60,12 +66,38 @@ public:
 
 		glLinkProgram(shaderProgram);
 
+		// Check status of shader program linking.
+		GLint status;
+
+		glGetProgramiv(shaderProgram, GL_LINK_STATUS, &status);
+
+		if (status == GL_FALSE)
+		{
+			GLint logLength = 0;
+			char* infoLog;
+			glGetProgramiv(shaderProgram, GL_INFO_LOG_LENGTH, &logLength);
+			infoLog = new char[logLength];
+
+			glGetProgramInfoLog(shaderProgram, logLength, &logLength, infoLog);
+
+			std::cout << "ERROR shader link stage: " << infoLog << std::endl;
+
+			return;
+		}
+
+		std::cout << "[Loaded] linked shader program " << *vertex_file_name << " " << *frag_file_name << std::endl;
 		//init();	
 	}
 	~ShaderProgram() {
 		glDeleteShader(vertexShader);
 		glDeleteShader(fragmentShader);
 		glDeleteProgram(shaderProgram);
+
+		delete test_model;
+		delete test_diffusemap;
+		delete test_specularmap;
+		delete test_normalmap;
+		delete test_emissivemap;
 	}
 	bool LoadShaderProgram(std::string* file_name, SHADER_TYPE shader_type) 
 	{
@@ -84,16 +116,25 @@ public:
 			glCompileShader(vertexShader);
 
 			int  success;
-			char infoLog[512];
+			int infolog_length;
+			char* infoLog;
+
 			glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
+
+			glGetShaderiv(vertexShader, GL_INFO_LOG_LENGTH, &infolog_length);
+			infoLog = new char[infolog_length];
 
 			if (!success)
 			{
-				glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
-				std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
+				glGetShaderInfoLog(vertexShader, infolog_length, NULL, infoLog);
+				std::cout << "[ERROR] Shader vertex compilation failed '" << *file_name << "'\n" << infoLog << std::endl;
 			}
 
 			glAttachShader(shaderProgram, vertexShader);
+
+			glBindAttribLocation(shaderProgram, 0, "aPos");
+			glBindAttribLocation(shaderProgram, 1, "aNorm");
+			glBindAttribLocation(shaderProgram, 2, "aTexCoord");
 		}
 		else if (shader_type == SHADER_TYPE::FragmentShader)
 		{
@@ -106,20 +147,37 @@ public:
 			glCompileShader(fragmentShader);
 
 			int  success;
-			char infoLog[512];
+			int infolog_length;
+			char* infoLog;
 			
 			glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
 
+			glGetShaderiv(fragmentShader, GL_INFO_LOG_LENGTH, &infolog_length);
+			infoLog = new char[infolog_length];
+			
+
 			if (!success)
 			{
-				glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
-				std::cout << "ERROR::SHADER::FRAG::COMPILATION_FAILED\n" << infoLog << std::endl;
+				glGetShaderInfoLog(fragmentShader, infolog_length, NULL, infoLog);
+				std::cout << "[ERROR] Shader vertex compilation failed '" << *file_name << "'\n" << infoLog << std::endl;
 			}
 
 			glAttachShader(shaderProgram, fragmentShader);
+
+			glBindAttribLocation(shaderProgram, 0, "aPos");
+			glBindAttribLocation(shaderProgram, 1, "aNorm");
+			glBindAttribLocation(shaderProgram, 2, "aTexCoord");
 		}
 
 		return true;
+	}
+	Model* LoadOBJModel(std::string* file_name) {
+		Model* model = new Model(file_name);
+		return model;
+	}
+	Texture2D* LoadTexture(std::string* file_name) {
+		Texture2D* texture = new Texture2D(file_name);
+		return texture;
 	}
 
 public:
@@ -128,45 +186,66 @@ public:
 		if (has_init == false) 
 		{
 			////////////////
-			vertices = new float[9] {
-				-0.5f, -0.5f, 0.0f,
-					0.5f, -0.5f, 0.0f,
-					0.0f, 0.5f, 0.0f
-				};
+			//vertices = new float[9] {
+			//	-0.5f, -0.5f, 0.0f,
+			//	0.5f, -0.5f, 0.0f,
+			//	0.0f, 0.5f, 0.0f
+			//};
+			//float texCoords[] = {
+			//	0.0f, 0.0f,  // lower-left corner  
+			//	1.0f, 0.0f,  // lower-right corner
+			//	0.5f, 1.0f   // top-center corner
+			//};
+			////vertices = new float[32] {
+			////	// positions          // colors           // texture coords
+			////	 0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
+			////	 0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
+			////	-0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
+			////	-0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f    // top left 
+			////};
+			////glGenVertexArrays(1, &VAO);
 
+			////glBindVertexArray(VAO);
 
-			glGenVertexArrays(1, &VAO);
+			////glGenBuffers(1, &VBO);
+			////glBindBuffer(GL_ARRAY_BUFFER, VBO);
 
-			glBindVertexArray(VAO);
-
-			glGenBuffers(1, &VBO);
-			glBindBuffer(GL_ARRAY_BUFFER, VBO);
-
-			glBufferData(GL_ARRAY_BUFFER, 9 * sizeof(float), vertices, GL_STATIC_DRAW);
+			////glBufferData(GL_ARRAY_BUFFER, 32 * sizeof(float), vertices, GL_STATIC_DRAW);
 		
-			//glGenVertexArrays(1, &VAO);
-			glBindVertexArray(VAO);
-			glEnableVertexAttribArray(0);
-			glBindBuffer(GL_ARRAY_BUFFER, VBO);
-			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+			//////glGenVertexArrays(1, &VAO);
+			////glBindVertexArray(VAO);
+			////glEnableVertexAttribArray(0);
+			////glEnableVertexAttribArray(1);
+			////glEnableVertexAttribArray(2);
+			////glBindBuffer(GL_ARRAY_BUFFER, VBO);
+			//////glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+			////glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(0 * sizeof(float)));
+			////glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+			////glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+			////
+			test_model = LoadOBJModel(new std::string("obj\\diablo3_pose\\diablo3_pose.obj"));
+			test_model->init();
+
+			test_diffusemap = LoadTexture(new std::string("obj\\diablo3_pose\\diablo3_pose_diffuse.tga"));
+			test_specularmap = LoadTexture(new std::string("obj\\diablo3_pose\\diablo3_pose_spec.tga"));
+			test_normalmap = LoadTexture(new std::string("obj\\diablo3_pose\\diablo3_pose_nm_tangent.tga"));
+			test_emissivemap = LoadTexture(new std::string("obj\\diablo3_pose\\diablo3_pose_glow.tga"));
 		}
 		has_init = true;
 	}
-	void use(Matrix4* camera, Vector3f* camera_pos, Quaternion* camera_orientation, float camera_angle_pitch, float camera_angle_yaw, float camera_angle_roll, Vector3f** camera_front, Vector3f** camera_up) {
-		//glUseProgram(shaderProgram);
+	void use(Matrix4* camera, Vector3f* camera_pos, Quaternion* camera_orientation, float camera_angle_pitch, float camera_angle_yaw, float camera_angle_roll, Vector3f** camera_front, Vector3f** camera_up, bool show_wireframe) {
+		glUseProgram(shaderProgram);
 		//glBindVertexArray(VAO);
 		// 0. copy our vertices array in a buffer for OpenGL to use
 		//glBindBuffer(GL_ARRAY_BUFFER, VBO);
 		//glBufferData(GL_ARRAY_BUFFER, 9 * sizeof(float), vertices, GL_STATIC_DRAW);
 		// 1. then set the vertex attributes pointers
 		//glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-		glEnableVertexAttribArray(0);
+		//glEnableVertexAttribArray(0);
+		//glEnableVertexAttribArray(1);
+		//glEnableVertexAttribArray(2);
 
-
-
-
-		// 2. use our shader program when we want to render an object
-		glUseProgram(shaderProgram);
+		//glUseProgram(shaderProgram);
 
 		// 3. now draw the object 
 		// update the uniform color
@@ -231,6 +310,9 @@ public:
 		*camera_front = cam_forward;
 		*camera_up = cam_up;
 
+		//Matrix4* cam_scale = Matrix4::CreateScaleMatrix(new Vector3f(0.1f, 0.1f, 0.1f));
+		//camera = Matrix4::Multiply(camera, cam_scale);
+
 		//Vector3f* cameraPos = new Vector3f(0.0f, 0.0f, 3.0f);
 		//Vector3f* cameraFront = new Vector3f(0.0f, 0.0f, -1.0f);
 		//Vector3f* cameraUp = new Vector3f(0.0f, 1.0f, 0.0f);
@@ -252,6 +334,8 @@ public:
 		float* mat4_proj_arr = projection->ToArray();
 		float* mat4_view_arr = view->ToArray();
 		float* mat4_model_arr = model->ToArray();
+
+		glUseProgram(this->shaderProgram);
 
 		int mvpLocation = glGetUniformLocation(shaderProgram, "MVP");
 		if (mvpLocation != -1)
@@ -276,14 +360,39 @@ public:
 		{
 			glUniformMatrix4fv(modelLocation, 1, false, mat4_model_arr);
 		}
-		// now render the triangle
-		glBindVertexArray(VAO);
-		glBindBuffer(GL_ARRAY_BUFFER, VBO);
-		//glEnableVertexAttribArray(0);
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-		glDrawArrays(GL_TRIANGLES, 0, 3);
-	
+
+		int ourTextureLocation = glGetUniformLocation(shaderProgram, "ourTexture");
+		if (ourTextureLocation != -1)
+		{
+			glUniform1i(ourTextureLocation, 0);
+		}
+
+		int ourTextureNormalsLocation = glGetUniformLocation(shaderProgram, "ourTextureNormals");
+		if (ourTextureNormalsLocation != -1)
+		{
+			glUniform1i(ourTextureNormalsLocation, 1);
+		}
 		
+		// Now Render the buffers.
+		//glBindVertexArray(VAO);
+		//glBindBuffer(GL_ARRAY_BUFFER, VBO);
+		test_model->bind();
+
+		glActiveTexture(GL_TEXTURE0);
+		test_diffusemap->bind();
+
+		glActiveTexture(GL_TEXTURE1);
+		test_normalmap->bind();
+		//test_specularmap->bind();
+		//test_emissivemap->bind();
+		//glEnableVertexAttribArray(0);
+		
+		//glEnable(GL_CULL_FACE);
+		//glCullFace(GL_BACK);
+
+		glPolygonMode(GL_FRONT_AND_BACK, (show_wireframe? GL_LINE : GL_FILL));
+		glDrawArrays(GL_TRIANGLES, 0, test_model->face_verts->size());
+		//glDrawElements(GL_TRIANGLES, test_model->face_indicies->size(), GL_UNSIGNED_INT, 0);
 
 
 		delete mat4_arr;

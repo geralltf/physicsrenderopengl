@@ -61,6 +61,7 @@ private:
 	Vector3f* camera_up = new Vector3f(0.0f, 1.0f, 0.0f);
 	float turnSpeed = 0.001f;
 	float camera_speed = 0.001f;
+	bool show_wireframe = false;
 public:
 	RenderWindow(int width, int height, std::string* window_title, bool isfullscreen);
 	static void framebuffer_size_callback(GLFWwindow* window, int width, int height);

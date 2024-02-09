@@ -1,10 +1,16 @@
 ﻿  AABB.cpp
-C:\projects\ragdoll\ragdollphys\ragdollphys\ShaderProgram.h(173,19): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\projects\ragdoll\ragdollphys\ragdollphys\ShaderProgram.h(252,19): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  (compiling source file 'AABB.cpp')
+  
+C:\projects\ragdoll\ragdollphys\ragdollphys\ShaderProgram.h(394,61): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
   (compiling source file 'AABB.cpp')
   
 C:\projects\ragdoll\ragdollphys\ragdollphys\AABB.cpp(257,18): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
   EntryPoint.cpp
-C:\projects\ragdoll\ragdollphys\ragdollphys\ShaderProgram.h(173,19): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\projects\ragdoll\ragdollphys\ragdollphys\ShaderProgram.h(252,19): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  (compiling source file 'EntryPoint.cpp')
+  
+C:\projects\ragdoll\ragdollphys\ragdollphys\ShaderProgram.h(394,61): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
   (compiling source file 'EntryPoint.cpp')
   
   Matrix4.cpp
@@ -12,22 +18,37 @@ C:\projects\ragdoll\ragdollphys\ragdollphys\Matrix4.cpp(919,42): warning C4244: 
 C:\projects\ragdoll\ragdollphys\ragdollphys\Matrix4.cpp(919,24): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 C:\projects\ragdoll\ragdollphys\ragdollphys\Matrix4.cpp(920,43): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 C:\projects\ragdoll\ragdollphys\ragdollphys\Matrix4.cpp(920,19): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  Model.cpp
+C:\projects\ragdoll\ragdollphys\ragdollphys\Model.cpp(191,23): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+C:\projects\ragdoll\ragdollphys\ragdollphys\Model.cpp(196,32): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
   QuadTree.cpp
-C:\projects\ragdoll\ragdollphys\ragdollphys\ShaderProgram.h(173,19): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\projects\ragdoll\ragdollphys\ragdollphys\ShaderProgram.h(252,19): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  (compiling source file 'QuadTree.cpp')
+  
+C:\projects\ragdoll\ragdollphys\ragdollphys\ShaderProgram.h(394,61): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
   (compiling source file 'QuadTree.cpp')
   
   QuadTree.h
-C:\projects\ragdoll\ragdollphys\ragdollphys\ShaderProgram.h(173,19): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\projects\ragdoll\ragdollphys\ragdollphys\ShaderProgram.h(252,19): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  (compiling source file 'QuadTree.h')
+  
+C:\projects\ragdoll\ragdollphys\ragdollphys\ShaderProgram.h(394,61): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
   (compiling source file 'QuadTree.h')
   
   Quaternion.cpp
 C:\projects\ragdoll\ragdollphys\ragdollphys\Quaternion.cpp(229,48): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
   QueryRenderSample.cpp
-C:\projects\ragdoll\ragdollphys\ragdollphys\ShaderProgram.h(173,19): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\projects\ragdoll\ragdollphys\ragdollphys\ShaderProgram.h(252,19): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  (compiling source file 'QueryRenderSample.cpp')
+  
+C:\projects\ragdoll\ragdollphys\ragdollphys\ShaderProgram.h(394,61): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
   (compiling source file 'QueryRenderSample.cpp')
   
   RenderWindow.cpp
-C:\projects\ragdoll\ragdollphys\ragdollphys\ShaderProgram.h(173,19): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\projects\ragdoll\ragdollphys\ragdollphys\ShaderProgram.h(252,19): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  (compiling source file 'RenderWindow.cpp')
+  
+C:\projects\ragdoll\ragdollphys\ragdollphys\ShaderProgram.h(394,61): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
   (compiling source file 'RenderWindow.cpp')
   
   Vector2i.cpp
