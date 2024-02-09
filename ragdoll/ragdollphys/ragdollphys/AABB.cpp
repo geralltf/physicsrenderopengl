@@ -14,7 +14,7 @@ bool AABB::contains_point(const Vector2f* point) {
 bool AABB::intersects_AABB(const AABB* other) {
 	return true;
 }
-void AABB::render(Matrix4* camera, Vector3f* camera_pos, Quaternion* camera_orientation, float camera_angle_pitch, float camera_angle_yaw, float camera_angle_roll, Vector3f** camera_front, Vector3f** camera_up, bool show_wireframe) {
+void AABB::render(Matrix4* camera, Vector3f* camera_pos, Quaternion* camera_orientation, float camera_angle_pitch, float camera_angle_yaw, float camera_angle_roll, Vector3f** camera_front, Vector3f** camera_up, bool show_wireframe, Vector3f* light_position) {
 
 	//float width = 10.0f;
 	//float height = 10.0f;

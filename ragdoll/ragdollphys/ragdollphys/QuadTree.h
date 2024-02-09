@@ -40,7 +40,7 @@ public:
 public:
 
     // Find all points that appear within a range
-    std::vector<QueryRenderSample*>* query_render_range(AABB* range, Matrix4* camera, Vector3f* camera_pos, Quaternion* camera_orientation, float camera_angle_pitch, float camera_angle_yaw, float camera_angle_roll, Vector3f** camera_front, Vector3f** camera_up, bool show_wireframe);
+    std::vector<QueryRenderSample*>* query_render_range(AABB* range, Matrix4* camera, Vector3f* camera_pos, Quaternion* camera_orientation, float camera_angle_pitch, float camera_angle_yaw, float camera_angle_roll, Vector3f** camera_front, Vector3f** camera_up, bool show_wireframe, Vector3f* light_position);
 
     // Find all points that appear within a range
     std::vector<Vector2f*>* query_range(AABB* range);

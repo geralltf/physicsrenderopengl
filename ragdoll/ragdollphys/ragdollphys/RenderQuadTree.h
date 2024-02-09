@@ -29,17 +29,17 @@ public:
 
 	}
 
-	void render(Matrix4* camera, Vector3f* camera_pos, Quaternion* camera_orientation, float camera_angle_pitch, float  camera_angle_yaw, float camera_angle_roll, Vector3f** camera_front, Vector3f** camera_up, bool show_wireframe)
+	void render(Matrix4* camera, Vector3f* camera_pos, Quaternion* camera_orientation, float camera_angle_pitch, float  camera_angle_yaw, float camera_angle_roll, Vector3f** camera_front, Vector3f** camera_up, bool show_wireframe, Vector3f* light_position)
 	{
 		auto scene_bounds = scene->boundary;
-		auto range = scene->query_render_range(scene_bounds, camera, camera_pos, camera_orientation, camera_angle_pitch, camera_angle_yaw, camera_angle_roll, camera_front, camera_up, show_wireframe);
+		auto range = scene->query_render_range(scene_bounds, camera, camera_pos, camera_orientation, camera_angle_pitch, camera_angle_yaw, camera_angle_roll, camera_front, camera_up, show_wireframe, light_position);
 		for (int i = 0; i < range->size(); i++)
 		{
 			auto scene_element = range->at(i);
 
-			scene_element->render(camera, camera_pos, camera_orientation, camera_angle_pitch, camera_angle_yaw, camera_angle_roll, camera_front, camera_up, show_wireframe);
+			scene_element->render(camera, camera_pos, camera_orientation, camera_angle_pitch, camera_angle_yaw, camera_angle_roll, camera_front, camera_up, show_wireframe, light_position);
 		}
-		scene_bounds->render(camera, camera_pos, camera_orientation, camera_angle_pitch, camera_angle_yaw, camera_angle_roll, camera_front, camera_up, show_wireframe);
+		scene_bounds->render(camera, camera_pos, camera_orientation, camera_angle_pitch, camera_angle_yaw, camera_angle_roll, camera_front, camera_up, show_wireframe, light_position);
 	}
 };
 

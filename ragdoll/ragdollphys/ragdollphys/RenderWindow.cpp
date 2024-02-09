@@ -173,7 +173,26 @@ void RenderWindow::process_input(GLFWwindow* window)
 		//camera = Matrix4::Multiply(camera, mat);
 	}
 
-	
+	if (glfwGetKey(window, GLFW_KEY_I) == GLFW_PRESS) {
+		light_position->x += 0.1f;
+	}
+	if (glfwGetKey(window, GLFW_KEY_K) == GLFW_PRESS) {
+		light_position->x -= 0.1f;
+	}
+
+	if (glfwGetKey(window, GLFW_KEY_U) == GLFW_PRESS) {
+		light_position->z += 0.1f;
+	}
+	if (glfwGetKey(window, GLFW_KEY_J) == GLFW_PRESS) {
+		light_position->z -= 0.1f;
+	}
+
+	if (glfwGetKey(window, GLFW_KEY_Y) == GLFW_PRESS) {
+		light_position->y += 0.1f;
+	}
+	if (glfwGetKey(window, GLFW_KEY_H) == GLFW_PRESS) {
+		light_position->y -= 0.1f;
+	}
 
 	if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
 		camera_angle_pitch += turnSpeed;
@@ -231,5 +250,5 @@ void RenderWindow::framebufer_render_loop()
 		std::cout << "OpenGL error: " << err << std::endl;
 	}
 
-	render_scene->render(camera, camera_pos, camera_orientation, camera_angle_pitch, camera_angle_yaw, camera_angle_roll, &camera_front, &camera_up, show_wireframe);
+	render_scene->render(camera, camera_pos, camera_orientation, camera_angle_pitch, camera_angle_yaw, camera_angle_roll, &camera_front, &camera_up, show_wireframe, light_position);
 }

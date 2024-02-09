@@ -50,6 +50,8 @@ public:
 	Texture2D* test_normalmap;
 	Texture2D* test_emissivemap;
 
+	Vector3f* lightPos = new Vector3f(0.0f, 0.0f, -2.0f);
+
 	static std::string* read_text_file(std::string* file_name)
 	{
 		std::ifstream t(file_name->c_str());
@@ -233,7 +235,7 @@ public:
 		}
 		has_init = true;
 	}
-	void use(Matrix4* camera, Vector3f* camera_pos, Quaternion* camera_orientation, float camera_angle_pitch, float camera_angle_yaw, float camera_angle_roll, Vector3f** camera_front, Vector3f** camera_up, bool show_wireframe) {
+	void use(Matrix4* camera, Vector3f* camera_pos, Quaternion* camera_orientation, float camera_angle_pitch, float camera_angle_yaw, float camera_angle_roll, Vector3f** camera_front, Vector3f** camera_up, bool show_wireframe, Vector3f* light_position) {
 		glUseProgram(shaderProgram);
 		//glBindVertexArray(VAO);
 		// 0. copy our vertices array in a buffer for OpenGL to use
@@ -246,6 +248,8 @@ public:
 		//glEnableVertexAttribArray(2);
 
 		//glUseProgram(shaderProgram);
+
+		this->lightPos = light_position;
 
 		// 3. now draw the object 
 		// update the uniform color
@@ -372,6 +376,19 @@ public:
 		{
 			glUniform1i(ourTextureNormalsLocation, 1);
 		}
+
+		float* lightPosArray = nullptr;
+		int lightPosLocation = glGetUniformLocation(shaderProgram, "lightPos");
+		if (lightPosLocation != -1)
+		{
+			lightPosArray = new float[3];
+			lightPosArray[0] = lightPos->x;
+			lightPosArray[1] = lightPos->y;
+			lightPosArray[2] = lightPos->z;
+
+			glUniform3fv(lightPosLocation, 1, lightPosArray);
+		}
+
 		
 		// Now Render the buffers.
 		//glBindVertexArray(VAO);
@@ -394,6 +411,10 @@ public:
 		glDrawArrays(GL_TRIANGLES, 0, test_model->face_verts->size());
 		//glDrawElements(GL_TRIANGLES, test_model->face_indicies->size(), GL_UNSIGNED_INT, 0);
 
+		if (lightPosArray != nullptr)
+		{
+			delete lightPosArray;
+		}
 
 		delete mat4_arr;
 		delete mat4_model_arr;

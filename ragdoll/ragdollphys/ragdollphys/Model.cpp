@@ -132,7 +132,7 @@ void Model::parse(std::string* _file_name)
                     vert_pos1 = (*verts)[face_vert_index];
                     uv1 = (*tex_coord)[face_tex_index];
                 }
-                if (cnt == 3) 
+                if (cnt == 2) 
                 {
                     vert_pos2 = (*verts)[face_vert_index];
                     uv2 = (*tex_coord)[face_tex_index];
@@ -262,16 +262,16 @@ void Model::init()
     glGenBuffers(1, &tangentsBuffer);
     glBindBuffer(GL_ARRAY_BUFFER, tangentsBuffer);
     glBufferData(GL_ARRAY_BUFFER, face_tangents->size() * sizeof(float) * 3, farray_tangents, GL_STATIC_DRAW);
-    glEnableVertexAttribArray(2);
+    glEnableVertexAttribArray(3);
     //glTexCoordPointer(3, GL_FLOAT, 0, face_tangents->data());
-    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+    glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 
     glGenBuffers(1, &bitangentsBuffer);
     glBindBuffer(GL_ARRAY_BUFFER, bitangentsBuffer);
     glBufferData(GL_ARRAY_BUFFER, face_bitangents->size() * sizeof(float) * 3, farray_bitangents, GL_STATIC_DRAW);
-    glEnableVertexAttribArray(2);
+    glEnableVertexAttribArray(4);
     //glTexCoordPointer(3, GL_FLOAT, 0, face_tangents->data());
-    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+    glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 
     //glVertexPointer(3, GL_FLOAT, 0, bananaVerts);
     //glNormalPointer(GL_FLOAT, 0, bananaNormals);
@@ -301,6 +301,8 @@ void Model::init()
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
     glEnableVertexAttribArray(2);
+    glEnableVertexAttribArray(3);
+    glEnableVertexAttribArray(4);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBindBuffer(GL_ARRAY_BUFFER, normalsBuffer);
@@ -328,6 +330,8 @@ void Model::bind()
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
     glEnableVertexAttribArray(2);
+    glEnableVertexAttribArray(3);
+    glEnableVertexAttribArray(4);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBindBuffer(GL_ARRAY_BUFFER, normalsBuffer);
     glBindBuffer(GL_ARRAY_BUFFER, texcoordsBuffer);

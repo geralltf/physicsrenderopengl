@@ -39,7 +39,13 @@ void main()
 	vec3 T = normalize(vec3(model * vec4(aTangent,   0.0)));
 	vec3 B = normalize(vec3(model * vec4(aBitangent, 0.0)));
 	vec3 N = normalize(vec3(model * vec4(aNorm,    0.0)));
-	TBN = mat3(T, B, N);
+	
+	// re-orthogonalize T with respect to N
+	T = normalize(T - dot(T, N) * N);
+	// then retrieve perpendicular vector B with the cross product of T and N
+	B = cross(N, T);
+	
+	//TBN = mat3(T, B, N);
 	TBN = transpose(mat3(T, B, N)); 
    
 	vs_out.TangentLightPos = TBN * lightPos;
