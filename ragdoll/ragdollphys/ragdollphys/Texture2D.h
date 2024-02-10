@@ -160,7 +160,10 @@ public:
 			//float borderColor[] = { 1.0f, 1.0f, 0.0f, 1.0f };
 			//glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
 
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+			//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+			//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 
@@ -170,13 +173,13 @@ public:
 			if (nrChannels == 3)
 			{
 				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, tga_file->imageWidth, tga_file->imageHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, tga_file->imageData); // GL_BGR
-				//glGenerateMipmap(GL_TEXTURE_2D);
+				glGenerateMipmap(GL_TEXTURE_2D);
 			}
 			else if (nrChannels == 4)
 			{
 				// GL_UNSIGNED_INT_8_8_8_8_REV
 				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, tga_file->imageWidth, tga_file->imageHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, tga_file->imageData); // GL_BGR GL_UNSIGNED_INT_8_8_8_8_REV
-				//glGenerateMipmap(GL_TEXTURE_2D);
+				glGenerateMipmap(GL_TEXTURE_2D);
 			}
 			
 

@@ -1,11 +1,14 @@
 #include <vector>
 #include <iostream>
 #include <string>
+#include <thread>
+#include <filesystem>
 
 #include "RenderWindow.h"
+#include "FileWatcher.h"
+#include "ShaderProgram.h"
 
-
-int main() 
+int main()
 {
 	bool isfullscreen = false;
 	//int width = 1980;
@@ -14,7 +17,6 @@ int main()
 	int height = 600;
 	RenderWindow* window = new RenderWindow(width, height, new std::string("Physics Library - Gerallt Franke"), isfullscreen);
 	window->render_loop();
-
 	delete window;
 
 	return EXIT_SUCCESS;

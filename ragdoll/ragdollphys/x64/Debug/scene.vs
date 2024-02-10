@@ -44,7 +44,6 @@ void main()
 	T = normalize(T - dot(T, N) * N);
 	// then retrieve perpendicular vector B with the cross product of T and N
 	B = cross(N, T);
-	
 	//TBN = mat3(T, B, N);
 	TBN = transpose(mat3(T, B, N)); 
    

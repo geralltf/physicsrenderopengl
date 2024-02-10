@@ -25,6 +25,9 @@
     <Filter Include="Source Files\SCENE">
       <UniqueIdentifier>{ba472e99-0d0c-41e9-8153-b5e92130f008}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\ENGINE">
+      <UniqueIdentifier>{dc2b0949-fbb2-43e7-a081-fc06cdda1ded}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EntryPoint.cpp">
@@ -64,6 +67,9 @@
       <Filter>Source Files\MATH</Filter>
     </ClCompile>
     <ClCompile Include="Model.cpp">
+      <Filter>Source Files\SCENE</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderProgram.cpp">
       <Filter>Source Files\SCENE</Filter>
     </ClCompile>
   </ItemGroup>
@@ -115,6 +121,9 @@
     </ClInclude>
     <ClInclude Include="Texture2D.h">
       <Filter>Header Files\SCENE</Filter>
+    </ClInclude>
+    <ClInclude Include="FileWatcher.h">
+      <Filter>Header Files\ENGINE</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

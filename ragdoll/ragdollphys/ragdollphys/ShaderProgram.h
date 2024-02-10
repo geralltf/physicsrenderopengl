@@ -9,6 +9,7 @@
 #include <istream>
 #include <sstream>
 #include <fstream>
+#include <map>
 
 //#include "GL\glfw3.h"
 //#include "GL\GL.h"
@@ -52,6 +53,11 @@ public:
 
 	Vector3f* lightPos = new Vector3f(0.0f, 0.0f, -2.0f);
 
+	std::string* _vertex_file_name;
+	std::string* _frag_file_name;
+
+	static std::map<const char*, ShaderProgram*>* map_all_shaders;
+
 	static std::string* read_text_file(std::string* file_name)
 	{
 		std::ifstream t(file_name->c_str());
@@ -60,12 +66,45 @@ public:
 		std::string* result = new std::string(buffer.str());
 		return result;
 	}
+	
+	static void shader_hot_reload(std::string* file_name, SHADER_TYPE shader_type);
+
 	ShaderProgram(std::string* vertex_file_name, std::string* frag_file_name) {
+
+		if (map_all_shaders == nullptr)
+		{
+			map_all_shaders = new std::map<const char*, ShaderProgram*>();
+		}
+		//(*map_all_shaders)[vertex_file_name] = this;
+		//(*map_all_shaders)[frag_file_name] = this;
+
+		map_all_shaders->insert(std::pair<const char*, ShaderProgram*>(vertex_file_name->c_str(), this));
+		map_all_shaders->insert(std::pair<const char*, ShaderProgram*>(frag_file_name->c_str(), this));
+
+		this->_vertex_file_name = vertex_file_name;
+		this->_frag_file_name = frag_file_name;
+
 		shaderProgram = glCreateProgram();
 
-		LoadShaderProgram(vertex_file_name, SHADER_TYPE::VertexShader);
-		LoadShaderProgram(frag_file_name, SHADER_TYPE::FragmentShader);
+		LoadShaderProgram(vertex_file_name, SHADER_TYPE::VertexShader, false);
+		LoadShaderProgram(frag_file_name, SHADER_TYPE::FragmentShader, false);
 
+		load(vertex_file_name, frag_file_name, false);
+		//init();	
+	}
+	~ShaderProgram() {
+		glDeleteShader(vertexShader);
+		glDeleteShader(fragmentShader);
+		glDeleteProgram(shaderProgram);
+
+		delete test_model;
+		delete test_diffusemap;
+		delete test_specularmap;
+		delete test_normalmap;
+		delete test_emissivemap;
+	}
+	void load(std::string* vertex_file_name, std::string* frag_file_name, bool load_again)
+	{
 		glLinkProgram(shaderProgram);
 
 		// Check status of shader program linking.
@@ -88,22 +127,23 @@ public:
 		}
 
 		std::cout << "[Loaded] linked shader program " << *vertex_file_name << " " << *frag_file_name << std::endl;
-		//init();	
 	}
-	~ShaderProgram() {
-		glDeleteShader(vertexShader);
-		glDeleteShader(fragmentShader);
-		glDeleteProgram(shaderProgram);
-
-		delete test_model;
-		delete test_diffusemap;
-		delete test_specularmap;
-		delete test_normalmap;
-		delete test_emissivemap;
-	}
-	bool LoadShaderProgram(std::string* file_name, SHADER_TYPE shader_type) 
+	bool LoadShaderProgram(std::string* file_name, SHADER_TYPE shader_type, bool load_again) 
 	{
 		std::string* shader_source = read_text_file(file_name);
+
+		if (load_again) 
+		{
+			//if (shader_type == SHADER_TYPE::VertexShader) 
+			//{
+			//	glDeleteShader(vertexShader);
+			//}
+			//if (shader_type == SHADER_TYPE::FragmentShader)
+			//{
+			//	glDeleteShader(fragmentShader);
+			//}
+			int i = 0;
+		}
 
 		if (shader_type == SHADER_TYPE::VertexShader)
 		{
@@ -124,19 +164,30 @@ public:
 			glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
 
 			glGetShaderiv(vertexShader, GL_INFO_LOG_LENGTH, &infolog_length);
-			infoLog = new char[infolog_length];
-
-			if (!success)
+			if (infolog_length >= 0)
 			{
-				glGetShaderInfoLog(vertexShader, infolog_length, NULL, infoLog);
-				std::cout << "[ERROR] Shader vertex compilation failed '" << *file_name << "'\n" << infoLog << std::endl;
+				infoLog = new char[infolog_length];
+
+				if (!success)
+				{
+					glGetShaderInfoLog(vertexShader, infolog_length, NULL, infoLog);
+					std::cout << "[ERROR] Shader vertex compilation failed '" << *file_name << "'\n" << infoLog << std::endl;
+				}
+				else 
+				{
+					glAttachShader(shaderProgram, vertexShader);
+
+					glBindAttribLocation(shaderProgram, 0, "aPos");
+					glBindAttribLocation(shaderProgram, 1, "aNorm");
+					glBindAttribLocation(shaderProgram, 2, "aTexCoord");
+
+					return true;
+				}
 			}
-
-			glAttachShader(shaderProgram, vertexShader);
-
-			glBindAttribLocation(shaderProgram, 0, "aPos");
-			glBindAttribLocation(shaderProgram, 1, "aNorm");
-			glBindAttribLocation(shaderProgram, 2, "aTexCoord");
+			else 
+			{
+				std::cout << "[ERROR] Shader vertex compilation failed " << *file_name << " no error log." << std::endl;
+			}
 		}
 		else if (shader_type == SHADER_TYPE::FragmentShader)
 		{
@@ -156,22 +207,33 @@ public:
 
 			glGetShaderiv(fragmentShader, GL_INFO_LOG_LENGTH, &infolog_length);
 			infoLog = new char[infolog_length];
-			
-
-			if (!success)
+			if (infolog_length >= 0)
 			{
-				glGetShaderInfoLog(fragmentShader, infolog_length, NULL, infoLog);
-				std::cout << "[ERROR] Shader vertex compilation failed '" << *file_name << "'\n" << infoLog << std::endl;
+				infoLog = new char[infolog_length];
+
+				if (!success)
+				{
+					glGetShaderInfoLog(fragmentShader, infolog_length, NULL, infoLog);
+					std::cout << "[ERROR] Shader vertex compilation failed '" << *file_name << "'\n" << infoLog << std::endl;
+				}
+				else 
+				{
+					glAttachShader(shaderProgram, fragmentShader);
+
+					glBindAttribLocation(shaderProgram, 0, "aPos");
+					glBindAttribLocation(shaderProgram, 1, "aNorm");
+					glBindAttribLocation(shaderProgram, 2, "aTexCoord");
+
+					return true;
+				}
 			}
-
-			glAttachShader(shaderProgram, fragmentShader);
-
-			glBindAttribLocation(shaderProgram, 0, "aPos");
-			glBindAttribLocation(shaderProgram, 1, "aNorm");
-			glBindAttribLocation(shaderProgram, 2, "aTexCoord");
+			else
+			{
+				std::cout << "[ERROR] Shader fragment compilation failed " << *file_name << " no error log." << std::endl;
+			}
 		}
 
-		return true;
+		return false;
 	}
 	Model* LoadOBJModel(std::string* file_name) {
 		Model* model = new Model(file_name);
@@ -183,6 +245,20 @@ public:
 	}
 
 public:
+	void deinit()
+	{
+		if (has_init)
+		{
+			has_init = false;
+
+			delete test_model;
+
+			delete test_diffusemap;
+			delete test_specularmap;
+			delete test_normalmap;
+			delete test_emissivemap;
+		}
+	}
 	void init()
 	{
 		if (has_init == false) 

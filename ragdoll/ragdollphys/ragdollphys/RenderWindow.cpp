@@ -54,6 +54,14 @@ RenderWindow::RenderWindow(int width, int height, std::string* window_title, boo
 	glfwMakeContextCurrent(window_context);
 	glViewport(0, 0, this->width, this->height);
 	glfwSetFramebufferSizeCallback(window_context, framebuffer_size_callback);
+
+	fw = new FileWatcher();
+	// Start monitoring a folder for changes and (in case of changes)
+	// run a user provided lambda function
+	fw->start([](std::string file_name, FileStatus file_status) -> void
+	{
+
+		}, new std::string("./"));
 }
 void RenderWindow::framebuffer_size_callback(GLFWwindow* window, int width, int height) {
 	glViewport(0, 0, width, height);
@@ -68,6 +76,7 @@ void RenderWindow::render_loop()
 	// RENDER LOOP.
 	while (!glfwWindowShouldClose(window_context))
 	{
+		fw->poll_watch();
 		process_input(window_context);
 		framebufer_render_loop();
 		glfwSwapBuffers(window_context);

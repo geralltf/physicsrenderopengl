@@ -52,7 +52,7 @@ void main()
 	vec3 objectColor = diffuse_tex.rgb;
 	float diff = max(dot(normal, lightDir), 0.0);
 	vec3 diffuse = (diff * lightColor);
-	vec3 shader_result = ((ambient + diffuse) * objectColor);
+	vec3 shader_result = (((ambient + diffuse) * 0.3) + objectColor);
 	FragColor = vec4(vec3(shader_result.r, shader_result.g, shader_result.b), 1.0);
 	//FragColor = vec4(diffuse_tex.r, diffuse_tex.g, diffuse_tex.b, 1.0);
 	//FragColor = vec4(texture(ourTexture, TexCoord.xy).rgb, 1.0);

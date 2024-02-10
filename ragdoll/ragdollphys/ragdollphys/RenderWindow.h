@@ -11,6 +11,7 @@
 #include "Matrix4.h"
 #include "QuadTree.h"
 #include "RenderQuadTree.h"
+#include "FileWatcher.h"
 
 //#include "GL/GL.h"
 //#include "GL/GLU.h"
@@ -63,6 +64,7 @@ private:
 	float camera_speed = 0.001f;
 	bool show_wireframe = false;
 	Vector3f* light_position = new Vector3f(0.0f, 0.0f, -2.0f);
+	FileWatcher* fw = nullptr;
 public:
 	RenderWindow(int width, int height, std::string* window_title, bool isfullscreen);
 	static void framebuffer_size_callback(GLFWwindow* window, int width, int height);
